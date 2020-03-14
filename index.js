@@ -1,11 +1,12 @@
 function main() {
+  $("#start").hide();
   for (var i = 0; i < 25; i++) {
     if (i%5 == 0) $("#center").append(`<div class="row justify-content-center">`);
     //for (var j = 0; j < 5; j++) {
       $(".row:last").append(`
-        <div class="card bg-light text-center col-2 m-1">
+        <div class="card bg-light text-center col-2 m-1" id="${i}">
           <div class="card-body">
-            <h5 class="card-title" id="${i}"></h5>
+            <h5 class="card-title"></h5>
           </div>
           <div class="input-group input-group-sm mb-3">
             <div class="input-group-prepend">
