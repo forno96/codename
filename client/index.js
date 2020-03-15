@@ -43,7 +43,9 @@ function main(st) {
     }
   }
   if (status == "master") {
-    for (var j = 0; j < 25; j++) {flipCard(j);}
+    for (var j = 0; j < 25; j++) flipCard(j);
+    for (var k = 0; k < 25; k++) showed_cards[k] = false;
+
     $("#center").append(`<h1 class="text-light mt-5">MASTER VIEW</h1>`);
   }
 }
@@ -51,14 +53,21 @@ function main(st) {
 function _flipCard(id){
   if (status == "master") {
     console.log('flip');
+    showed_cards[id] = true;
     $(`#${id} #title`).text("Showed");
-    socket.emit('flip_card', {'id': id});
+    socket.emit('flip_card', {'id_flip': id, 'state': showed_cards});
   }
 }
 
 socket.on('flip_card', function(message){
-  console.log("message recived");
-  flipCard(message.id);
+  console.log("change state recived");
+  for (var i = 0; i < 25; i++) {
+    console.log(message);
+    if (message.state[i] == true) {
+      if (status == "master") $(`#${i} #title`).text("Showed");
+      else flipCard(i);
+    }
+  }
 });
 
 function flipCard(id){
@@ -90,10 +99,4 @@ function flipCard(id){
 function add_word(id){
   var text = document.getElementById("input-"+id).value
   $(`#${id} h5`).append(text);
-}
-
-Math.seedrandom('any string you like');
-function parity(){
-
-  console.log(Math.random());
 }
