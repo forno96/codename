@@ -7,14 +7,20 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script src="./index.js"></script>
 </head>
 
 <body class="bg-dark">
+
   <div class="container text-center mt-5" id="center">
-    <h1 class="text-light">Code Name</h1>
-    <button type="button" class="btn btn-light btn-lg" onclick="main()" id="start">Start Game</button>
+    <h1 class="text-light mb-3">nome in codice</h1>
+    <div id="start">
+      <button type="button" class="btn btn-light btn-lg" onclick="main('player')">Start Game as player</button>
+      <button type="button" class="btn btn-outline-light btn-lg" onclick="main('master')">Start Game as master</button>
+    </div>
   </div>
+
 </body>
 
 </html>
