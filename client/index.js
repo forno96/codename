@@ -32,7 +32,7 @@ function main(st) {
         <div class="card bg-secondary text-center col-2 m-1" id="${i}" style="border-width: 2px;">
           <a href="javascript:_flipCard(${i})" style="text-decoration:none;" class="text-dark" id="card">
             <div class="card-title">
-              <p>Not showed</p>
+              <p id ="title">Not showed</p>
             </div>
             <div class="card-body">
               <h3 class="card-text font-weight-bold">${cards[i]}</h3>
@@ -51,7 +51,7 @@ function main(st) {
 function _flipCard(id){
   if (status == "master") {
     console.log('flip');
-    $(`#${id} p`).text("Showed");
+    $(`#${id} #title`).text("Showed");
     socket.emit('flip_card', {'id': id});
   }
 }

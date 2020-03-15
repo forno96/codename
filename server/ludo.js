@@ -9,9 +9,11 @@ var io = require('socket.io')(server);
 app.get('/', (req, res) => {
   res.sendFile('/usr/src/app/client/index.html'); // sendFile need absolute path
 });
-
 app.get('/index.js', (req, res) => {
   res.sendFile('/usr/src/app/client/index.js'); // sendFile need absolute path
+});
+app.get('/random.js', (req, res) => {
+  res.sendFile('/usr/src/app/client/random.js'); // sendFile need absolute path
 });
 
 // Quando i client si connettono, lo scriviamo nella console
