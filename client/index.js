@@ -18,9 +18,9 @@ function main(st) {
     if (i%5 == 0) $("#center").append(`<div class="row justify-content-center">`);
     if (status == "player") {
       $(".row:last").append(`
-        <div class="card bg-secondary text-center col-2 m-1" id="${i}" style="border-width: 2px;">
+        <div class="card bg-secondary text-center col-2 m-1 px-1" id="${i}" style="border-width: 2px;">
           <a href="javascript:_flipCard(${i})" style="text-decoration:none;" class="text-dark" id="card">
-            <div class="card-body">
+            <div class="card-body px-1">
               <h3 class="card-text font-weight-bold">${cards[i]}</h3>
               </div>
           </a>
@@ -29,12 +29,12 @@ function main(st) {
     }
     else {
       $(".row:last").append(`
-        <div class="card bg-secondary text-center col-2 m-1" id="${i}" style="border-width: 2px;">
+        <div class="card bg-secondary text-center col-2 m-1 px-1" id="${i}" style="border-width: 2px;">
           <a href="javascript:_flipCard(${i})" style="text-decoration:none;" class="text-dark" id="card">
             <div class="card-title">
               <p id ="title">Not showed</p>
             </div>
-            <div class="card-body">
+            <div class="card-body px-1">
               <h3 class="card-text font-weight-bold">${cards[i]}</h3>
             </div>
           </a>
