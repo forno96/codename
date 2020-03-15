@@ -1,4 +1,4 @@
-var cards = ["Saab", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW", "Volvo", "BMW"];
+var cards = ["zucchero", "Satellite", "Pecora", "Baffo", "Vite", "Missile", "Squalo", "Alpi", "Occhio", "Kiwi", "Laser", "Pechino", "Colpo", "Bacino", "Scampo", "Messico", "Metro", "Volo", "Lupo", "Polo", "Rospo", "Borsa", "Rivoluzione", "Viaggio", "Batteria", "Miele", "Patata", "Capo", "Banca", "Guerra", "Drago", "Centro", "Pasta", "Coniglio", "Aria", "Leone", "Vento", "Infermiera", "Cintura", "Chiesa", "Dottore", "Pesce", "Luna", "Balena", "Fuoco", "Ponte", "Veleno", "Tavola"];
 
 var color = ["red", "red", "red", "red", "red", "red", "red", "red", "red", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "black", "white", "white", "white", "white", "white", "white", "white"]
 
@@ -42,20 +42,10 @@ function gen_cards(){
   shuffle(color);
 }
 
-
-
-/*
-$(function(){
-    $(".cell").each(function(){
-       $(this).text(cards.pop());
-       $(this).css("background-color","grey");
-       if (y == "capo") $(this).css("color",color.pop());
-    });
-    $(".cell").click(function(){
-    if ($(this).css("background-color") == "rgb(128, 128, 128)") $(this).css("background-color", "red");
-    else if ($(this).css("background-color") == "rgb(255, 0, 0)") $(this).css("background-color", "blue");
-    else if ($(this).css("background-color") == "rgb(0, 0, 255)") $(this).css("background-color", "white");
-    else if ($(this).css("background-color") == "rgb(255, 255, 255)") $(this).css("background-color", "grey");
-});
-});
-*/
+function checkArray(){
+  for (var i= 0; i < cards.length; i++){
+    for(var j = i+1; j < cards.length; j++){
+      if(cards[i]==cards[j]) console.log(cards[i]);
+    }
+  }
+}
