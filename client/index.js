@@ -4,13 +4,53 @@ var showed_cards;
 var status;
 var key; // riempita in random.js
 
+var point;
+
 function main(st) {
   showed_cards = [];
   for (var k = 0; k < 25; k++) {showed_cards[k] = false;}
   status = st; // master | player
   gen_cards(); // Dato il seed "chiave" tutti sono sincronizzati
+  point = {
+    red: 0,
+    blue: 0,
+    white: 0
+  };
 
   $("#start").hide(); // Per cancellare la schermata di base
+
+  $("#center").append(`
+    <div class="row justify-content-center">
+
+      <div class="card bg-primary text-center col-3 m-1 px-1" id="blue">
+        <div class="card-body p-0">
+          <h5 class="card-text font-weight-bold">
+            <div>Team blu: </div>
+            <div id="point">0/8</div>
+          </h5>
+        </div>
+      </div>
+
+      <div class="card bg-light text-center col-3 m-1 px-1" id="white">
+        <div class="card-body p-0">
+          <h5 class="card-text font-weight-bold">
+            <div>Carte bianche: </div>
+            <div id="point">0/7</div>
+          </h5>
+        </div>
+      </div>
+
+      <div class="card bg-danger text-center col-3 m-1 px-1" id="red">
+        <div class="card-body p-0">
+          <h5 class="card-text font-weight-bold">
+            <div>Team rosso: </div>
+            <div id="point">0/8</div>
+          </h5>
+        </div>
+      </div>
+
+    </div>
+  `);
 
   for (var i = 0; i < 25; i++) { // Genera le 25 carte
     if (i%5 == 0) $("#center").append(`<div class="row justify-content-center">`);
@@ -20,7 +60,7 @@ function main(st) {
           <a href="javascript:_flipCard(${i})" style="text-decoration:none;" class="text-dark" id="card">
             <div class="card-body px-1">
               <h3 class="card-text font-weight-bold">${cards[i]}</h3>
-              </div>
+            </div>
           </a>
         </div>
       `);
@@ -55,9 +95,14 @@ function main(st) {
 function _flipCard(id){
   if (status == "master") {
     console.log('flip');
-    flipCard(id);
+    if(showed_cards[id] == false) {
+      if (color[id] == 'red') point.red ++;
+      else if (color[id] == 'blue') point.blue ++;
+      else if (color[id] == 'white') point.white ++;
+      flipCard(id);
+    }
     console.log(showed_cards);
-    socket.emit('flip_card', {'id_flip': id, 'key': key, 'state': showed_cards});
+    socket.emit('flip_card', {'key': key, 'id_flip': id, 'state': showed_cards, 'point': point});
   }
 }
 
@@ -65,6 +110,7 @@ socket.on('flip_card', function(message){
   console.log("change state recived");
   console.log(message);
   if (key == message.key){
+    point = message.point;
     for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
   }
 });
@@ -94,8 +140,11 @@ function flipCard(id){
           $(`#${id}`).addClass("bg-dark");
           $(`#${id}`).addClass("border-white");
           break;
-        default:
       }
     }
+
+    $(`#blue #point`).text(`${point.blue}/8`);
+    $(`#red #point`).text(`${point.red}/7`);
+    $(`#white #point`).text(`${point.white}/9`);
   }
 }
