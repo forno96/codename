@@ -2,6 +2,7 @@ var socket = io.connect(window.location.href);
 
 var showed_cards;
 var status;
+var key; // riempita in random.js
 
 function main(st) {
   showed_cards = [];
@@ -56,14 +57,16 @@ function _flipCard(id){
     console.log('flip');
     flipCard(id);
     console.log(showed_cards);
-    socket.emit('flip_card', {'id_flip': id, 'state': showed_cards});
+    socket.emit('flip_card', {'id_flip': id, 'key': key, 'state': showed_cards});
   }
 }
 
 socket.on('flip_card', function(message){
   console.log("change state recived");
   console.log(message);
-  for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
+  if (key == message.key){
+    for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
+  }
 });
 
 function flipCard(id){

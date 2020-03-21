@@ -14,6 +14,7 @@ function gen_cards(){
   };
 
   var x = $.urlParam("chiave");
+  key = x;
 
   Math.seedrandom(x);
 
