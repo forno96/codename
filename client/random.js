@@ -1,6 +1,6 @@
-var cards = ["zucchero", "Satellite", "Pecora", "Baffo", "Vite", "Missile", "Squalo", "Alpi", "Occhio", "Kiwi", "Laser", "Pechino", "Colpo", "Bacino", "Scampo", "Messico", "Metro", "Volo", "Lupo", "Polo", "Rospo", "Borsa", "Rivoluzione", "Viaggio", "Batteria", "Miele", "Patata", "Capo", "Banca", "Guerra", "Drago", "Centro", "Pasta", "Coniglio", "Aria", "Leone", "Vento", "Infermiera", "Cintura", "Chiesa", "Dottore", "Pesce", "Luna", "Balena", "Fuoco", "Ponte", "Veleno", "Tavola"];
+var cards = ["Zucchero", "Satellite", "Pecora", "Baffo", "Vite", "Missile", "Squalo", "Alpi", "Occhio", "Kiwi", "Laser", "Pechino", "Colpo", "Bacino", "Scampo", "Messico", "Metro", "Volo", "Lupo", "Polo", "Rospo", "Borsa", "Rivoluzione", "Viaggio", "Batteria", "Miele", "Patata", "Capo", "Banca", "Guerra", "Centro", "Pasta", "Coniglio", "Aria", "Leone", "Vento", "Infermiera", "Cintura", "Chiesa", "Dottore", "Pesce", "Luna", "Balena", "Fuoco", "Ponte", "Veleno", "Tavola", "Spaghetto", "Drago", "Corso", "Ombelico", "Anello", "Calcio", "Tasso", "Campana", "Piovra", "Elicottero", "Sedia", "Contrabbandiere", "Napoli", "Piano", "Fantasma", "Rombo", "Dante", "Cavallo", "Squadra", "Corona", "Croce", "Capelli", "Rete", "Piastrina", "Piega", "Sangue", "Profumo", "Popper", "Allargare", "Alcol", "Sauna", "Prugna", "Altalena", "Africa", "Postumi", "Pugno", "Picche", "Amante", "Anale", "Concime", "Pelle", "Piede", "Animale", "Scroto", "Prendere", "Verga", "Pistone", "Antro", "Segretaria"];
 
-var color = ["red", "red", "red", "red", "red", "red", "red", "red", "red", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "black", "white", "white", "white", "white", "white", "white", "white"]
+var color = ["red", "red", "red", "red", "red", "red", "red", "red", "red", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "black", "white", "white", "white", "white", "white", "white", "white"];
 
 function gen_cards(){
   $.urlParam = function(name){
@@ -11,10 +11,9 @@ function gen_cards(){
       else{
          return results[1] || 0;
       }
-  }
+  };
 
   var x = $.urlParam("chiave");
-  var y = $.urlParam("ruolo");
 
   Math.seedrandom(x);
 
