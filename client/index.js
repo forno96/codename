@@ -11,11 +11,6 @@ function main(st) {
   for (var k = 0; k < 25; k++) {showed_cards[k] = false;}
   status = st; // master | player
   gen_cards(); // Dato il seed "chiave" tutti sono sincronizzati
-  point = {
-    red: 0,
-    blue: 0,
-    white: 0
-  };
 
   $("#start").hide(); // Per cancellare la schermata di base
 
@@ -26,7 +21,7 @@ function main(st) {
         <div class="card-body p-0">
           <h5 class="card-text font-weight-bold">
             <div>Team blu: </div>
-            <div id="point">0/8</div>
+            <div id="point"></div>
           </h5>
         </div>
       </div>
@@ -35,7 +30,7 @@ function main(st) {
         <div class="card-body p-0">
           <h5 class="card-text font-weight-bold">
             <div>Carte bianche: </div>
-            <div id="point">0/7</div>
+            <div id="point"></div>
           </h5>
         </div>
       </div>
@@ -44,13 +39,15 @@ function main(st) {
         <div class="card-body p-0">
           <h5 class="card-text font-weight-bold">
             <div>Team rosso: </div>
-            <div id="point">0/9</div>
+            <div id="point"></div>
           </h5>
         </div>
       </div>
 
     </div>
   `);
+
+  reset_counter();
 
   for (var i = 0; i < 25; i++) { // Genera le 25 carte
     if (i%5 == 0) $("#center").append(`<div class="row justify-content-center">`);
@@ -84,6 +81,7 @@ function main(st) {
   if (status == "master") {
     status = "player";
     for (var j = 0; j < 25; j++) flipCard(j); // Per colorare le card senza modivicare la scritta
+    reset_counter();
     status = "master";
 
     for (var h = 0; h < 25; h++) showed_cards[h] = false;
@@ -96,13 +94,10 @@ function _flipCard(id){
   if (status == "master") {
     console.log('flip');
     if(showed_cards[id] == false) {
-      if (color[id] == 'red') point.red ++;
-      else if (color[id] == 'blue') point.blue ++;
-      else if (color[id] == 'white') point.white ++;
       flipCard(id);
     }
     console.log(showed_cards);
-    socket.emit('flip_card', {'key': key, 'id_flip': id, 'state': showed_cards, 'point': point});
+    socket.emit('flip_card', {'key': key, 'id_flip': id, 'state': showed_cards});
   }
 }
 
@@ -110,7 +105,6 @@ socket.on('flip_card', function(message){
   console.log("change state recived");
   console.log(message);
   if (key == message.key){
-    point = message.point;
     for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
   }
 });
@@ -118,6 +112,11 @@ socket.on('flip_card', function(message){
 function flipCard(id){
   if (showed_cards[id]==false){
     showed_cards[id]=true;
+
+    if (color[id] == 'red') point.red ++;
+    else if (color[id] == 'blue') point.blue ++;
+    else if (color[id] == 'white') point.white ++;
+
     if (status == 'master') {
       $(`#${id} #title`).text("Showed");
       $(`#${id}`).addClass("bg-secondary");
@@ -162,4 +161,16 @@ function flipCard(id){
     $(`#white #point`).text(`${point.white}/7`);
     $(`#red #point`).text(`${point.red}/9`);
   }
+}
+
+function reset_counter(){
+  point = {
+    red: 0,
+    blue: 0,
+    white: 0
+  };
+
+  $(`#blue #point`).text(`${point.blue}/8`);
+  $(`#white #point`).text(`${point.white}/7`);
+  $(`#red #point`).text(`${point.red}/9`);
 }
