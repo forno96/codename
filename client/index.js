@@ -44,7 +44,7 @@ function main(st) {
         <div class="card-body p-0">
           <h5 class="card-text font-weight-bold">
             <div>Team rosso: </div>
-            <div id="point">0/8</div>
+            <div id="point">0/9</div>
           </h5>
         </div>
       </div>
@@ -88,7 +88,7 @@ function main(st) {
 
     for (var h = 0; h < 25; h++) showed_cards[h] = false;
 
-    $("#center").append(`<h1 class="text-light mt-5">MASTER VIEW</h1>`);
+    $("#center").append(`<h1 class="text-light mt-3 mb-0">Master View</h1>`);
   }
 }
 
@@ -120,6 +120,21 @@ function flipCard(id){
     showed_cards[id]=true;
     if (status == 'master') {
       $(`#${id} #title`).text("Showed");
+      $(`#${id}`).addClass("bg-secondary");
+      switch (color[id]) {
+        case "blue":
+          $(`#${id}`).removeClass("bg-primary");
+          $(`#${id}`).addClass("border-primary");
+          break;
+        case "red":
+          $(`#${id}`).removeClass("bg-danger");
+          $(`#${id}`).addClass("border-danger");
+          break;
+        case "white":
+          $(`#${id}`).removeClass("bg-light");
+          $(`#${id}`).addClass("border-light");
+          break;
+      }
     }
     else {
       $(`#${id}`).removeClass("bg-secondary");
@@ -144,7 +159,7 @@ function flipCard(id){
     }
 
     $(`#blue #point`).text(`${point.blue}/8`);
-    $(`#red #point`).text(`${point.red}/7`);
-    $(`#white #point`).text(`${point.white}/9`);
+    $(`#white #point`).text(`${point.white}/7`);
+    $(`#red #point`).text(`${point.red}/9`);
   }
 }
