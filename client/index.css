@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Robot";
+  src: url("./assets/Robot.otf");
+}
+
+h1{
+  font-family: Robot;
+}
