@@ -2,9 +2,20 @@ var socket = io.connect(window.location.href);
 
 var showed_cards;
 var status;
-var key; // riempita in random.js
 
 var point;
+
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+};
+
+var key = $.urlParam("chiave");
 
 function main(st) {
   showed_cards = [];
@@ -101,12 +112,10 @@ function _flipCard(id){
   }
 }
 
-socket.on('flip_card', function(message){
+socket.on(`flip_card_${key}`, function(message){
   console.log("change state recived");
   console.log(message);
-  if (key == message.key){
-    for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
-  }
+  for (var i = 0; i < 25; i++) if (message.state[i] == true) flipCard(i);
 });
 
 function flipCard(id){

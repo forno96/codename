@@ -3,6 +3,7 @@ var cards = ["Carro Armato", "Zucchero", "Satellite", "Pecora", "Baffo", "Vite",
 var color = ["red", "red", "red", "red", "red", "red", "red", "red", "red", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "black", "white", "white", "white", "white", "white", "white", "white"];
 
 function gen_cards(){
+  /*
   $.urlParam = function(name){
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
       if (results==null){
@@ -14,7 +15,8 @@ function gen_cards(){
   };
 
   var x = $.urlParam("chiave");
-  key = x;
+  */
+  var x = key;
 
   Math.seedrandom(x);
 

@@ -14,12 +14,11 @@ app.get('/', (req, res) => {
 // Quando i client si connettono, lo scriviamo nella console
 io.sockets.on('connection', function(socket) {
   console.log('Nuovo visitatore connesso!');
-  socket.emit('message', 'Sei connesso amico!');
 
-  // Quando il server riceve una comunicazione di tipo "message" dal client
+  // Quando il server riceve una comunicazione di tipo "flip_card" dal client
   socket.on('flip_card', function(message) {
     console.log(`Card flipped id: ${message.id_flip}, key: ${message.key}`);
-    socket.broadcast.emit('flip_card', message);
+    socket.broadcast.emit(`flip_card_${message.key}`, message);
   });
 });
 
