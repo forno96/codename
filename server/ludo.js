@@ -1,12 +1,14 @@
+const abspath = '/usr/src/app';
+
 var express = require('express');
 var app = express();
-app.use(express.static('../client'));
+app.use(express.static(abspath + '/client'));
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Carichiamo il file index.html e mostriamo la pagina al visitatore
-const abspath = '/usr/src/app';
+
 app.get('/', (req, res) => {
   res.sendFile(abspath + '/client/index.html'); // sendFile need absolute path
 });
