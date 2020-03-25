@@ -16,6 +16,22 @@ $.urlParam = function(name){
 };
 
 var key = $.urlParam("chiave");
+if (key == null){
+   // Per cancellare i bottoni di base e reimpiazzarli
+  $("#start").html(`
+    <h2 class="text-light mt-4">Inserisci la chiave</h2>
+    <div class="row justify-content-center">
+      <form class="form-group">
+        <div class="input-group input-group-lg">
+          <input type="text" name="chiave" class="form-control" placeholder="Chiave">
+          <div class="input-group-append">
+            <button class="btn btn-outline-light" type="submit">Vai</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  `);
+}
 
 function main(st) {
   showed_cards = [];
@@ -23,7 +39,7 @@ function main(st) {
   status = st; // master | player
   gen_cards(); // Dato il seed "chiave" tutti sono sincronizzati
 
-  $("#start").hide(); // Per cancellare la schermata di base
+  $("#start").hide(); // Per cancellare i bottoni di base
 
   $("#center").append(`
     <div class="row justify-content-center">
