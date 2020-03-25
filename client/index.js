@@ -33,6 +33,15 @@ if (key == null){
   `);
 }
 
+function beMaster(){
+  socket.emit('be_master', {'key': key});
+  $("#start").append('<h2 class="text-light mt-4">Possono esserci fino a 2 Master!</h2>')
+}
+
+socket.on(`confirm_master_${key}`, function(message){
+  main("master");
+});
+
 function main(st) {
   showed_cards = [];
   for (var k = 0; k < 25; k++) {showed_cards[k] = false;}
