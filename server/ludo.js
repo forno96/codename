@@ -28,13 +28,15 @@ io.sockets.on('connection', function(socket) {
     socket.master = true;
     socket.key = message.key;
     if (masters[`${message.key}`] == undefined) masters[`${message.key}`] = 0;
-    if (masters[`${message.key}`] < 2) {
-      console.log(`Nuovo master a chiave: ${message.key}`);
-      masters[`${message.key}`] = masters[`${message.key}`] + 1;
-      socket.emit(`confirm_master_${message.key}`, {'leftMasters': 2 - masters[`${message.key}`]})
-    } else {
-      console.log(`Tentativo di nuovo master fallito a chiave: ${message.key}`);
-    }
+
+    masters[`${message.key}`] = masters[`${message.key}`] + 1;
+    console.log(`${masters[`${message.key}`]} master in chive ${message.key}`);
+    io.emit(`masters_number_${message.key}`, {'masters': masters[`${message.key}`]});
+  });
+
+  socket.on('get_masters', function(message) {
+    if (masters[`${message.key}`] == undefined) masters[`${message.key}`] = 0;
+    io.emit(`masters_number_${message.key}`, {'masters': masters[`${message.key}`]});
   });
 
   socket.on('disconnect', function() {
@@ -42,6 +44,7 @@ io.sockets.on('connection', function(socket) {
       if (socket.master == true) {
         masters[`${socket.key}`] --;
         console.log(`Master disconnesso a chiave: ${socket.key}`);
+        io.emit(`masters_number_${socket.key}`, {'masters': masters[`${socket.key}`]});
       }
       else {
         console.log(`Visitatore disconnesso`);

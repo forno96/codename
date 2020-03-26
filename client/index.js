@@ -33,13 +33,8 @@ if (key == null){
   `);
 }
 
-function beMaster(){
-  socket.emit('be_master', {'key': key});
-  $("#start").append('<h2 class="text-light mt-4">Possono esserci fino a 2 Master!</h2>')
-}
-
-socket.on(`confirm_master_${key}`, function(message){
-  main("master");
+socket.on(`masters_number_${key}`, function(message){
+  $(`#masters`).text(`Masters in game: ${message.masters}`);
 });
 
 function main(st) {
@@ -119,19 +114,20 @@ function main(st) {
     for (var j = 0; j < 25; j++) flipCard(j); // Per colorare le card senza modivicare la scritta
     reset_counter();
     status = "master";
-
     for (var h = 0; h < 25; h++) showed_cards[h] = false;
 
-    $("#center").append(`<h1 class="text-light mt-3 mb-0">Master View</h1>`);
+    socket.emit('be_master', {'key': key});
+    $("#center").append(`<h1 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Master View</h1> <h1 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="masters">Masters in game: 0</h1>`);
+  } else {
+    socket.emit('get_masters', {'key': key});
+    $("#center").append(`<h1 class="text-light mt-3 mb-0" id="masters">Masters in game: 0</h1>`);
   }
 }
 
 function _flipCard(id){
   if (status == "master") {
     console.log('flip');
-    if(showed_cards[id] == false) {
-      flipCard(id);
-    }
+    if(showed_cards[id] == false) flipCard(id);
     console.log(showed_cards);
     socket.emit('flip_card', {'key': key, 'id_flip': id, 'state': showed_cards});
   }
