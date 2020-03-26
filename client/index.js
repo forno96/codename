@@ -85,11 +85,9 @@ function main(st) {
     if (status == "player") { // Stile per la vista giocatore
       $(".row:last").append(`
         <div class="card bg-secondary text-center col-2 m-1 px-1" id="${i}" style="border-width: 2px;">
-          <a href="javascript:_flipCard(${i})" style="text-decoration:none;" class="text-dark" id="card">
-            <div class="card-body px-1">
-              <h3 class="card-text font-weight-bold">${cards[i]}</h3>
-            </div>
-          </a>
+          <div class="card-body px-1">
+            <h3 class="card-text font-weight-bold">${cards[i]}</h3>
+          </div>
         </div>
       `);
     }
@@ -181,6 +179,8 @@ function flipCard(id){
         case "black":
           $(`#${id} a`).removeClass("text-dark");
           $(`#${id} a`).addClass("text-white");
+          $(`#${id}`).removeClass("text-dark");
+          $(`#${id}`).addClass("text-white");
           $(`#${id}`).addClass("bg-dark");
           $(`#${id}`).addClass("border-white");
           break;
