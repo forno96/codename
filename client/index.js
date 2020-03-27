@@ -33,8 +33,9 @@ if (key == null){
   `);
 }
 
-socket.on(`masters_number_${key}`, function(message){
+socket.on(`status_${key}`, function(message){
   $(`#masters`).text(`Masters in game: ${message.masters}`);
+  $(`#players`).text(`Players in game: ${message.players}`);
 });
 
 function main(st) {
@@ -114,11 +115,11 @@ function main(st) {
     status = "master";
     for (var h = 0; h < 25; h++) showed_cards[h] = false;
 
-    socket.emit('be_master', {'key': key});
-    $("#center").append(`<h1 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Master View</h1> <h1 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="masters">Masters in game: 0</h1>`);
+    socket.emit('be_master', {});
+    $("#center").append(`<h1 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Master View</h1> <h1 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="players">Players in game: 0</h1> <h1 class="text-light mt-3 mb-0 mr-4" style="text-align:right;float:right;" id="masters">Masters in game: 0</h1>`);
   } else {
-    socket.emit('get_masters', {'key': key});
-    $("#center").append(`<h1 class="text-light mt-3 mb-0" id="masters">Masters in game: 0</h1>`);
+    socket.emit('get_update', {});
+    $("#center").append(`<h1 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Player View</h1> <h1 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="players">Players in game: 0</h1> <h1 class="text-light mt-3 mb-0 mr-4" style="text-align:right;float:right;" id="masters">Masters in game: 0</h1>`);
   }
 }
 

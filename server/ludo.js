@@ -7,7 +7,7 @@ app.use(express.static(abspath + '/client'));
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var masters = [];
+var game = [];
 // Carichiamo il file index.html e mostriamo la pagina al visitatore
 
 app.get('/', (req, res) => {
@@ -18,7 +18,12 @@ app.get('/', (req, res) => {
 io.sockets.on('connection', function(socket) {
   socket.key = socket.handshake.query.chiave;
   socket.master = false;
+  if (game[`${socket.key}`] == undefined) game[`${socket.key}`] = { 'players': 0, 'masters': 0}
+  game[`${socket.key}`].players ++ ;
+  io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
+
   console.log(`Nuovo giocatore connesso a chiave: ${socket.key}`);
+  console.log(`Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master a chiave ${socket.key}`);
 
   // Quando il server riceve una comunicazione di tipo "flip_card" dal client
   socket.on('flip_card', function(message) {
@@ -28,27 +33,28 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('be_master', function(message) {
     socket.master = true;
-    if (masters[`${message.key}`] == undefined) masters[`${message.key}`] = 0;
+    game[`${socket.key}`].masters ++ ;
+    io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
 
-    masters[`${message.key}`] = masters[`${message.key}`] + 1;
     console.log(`Un giocatore è diventato master a chiave: ${socket.key}`);
-    console.log(`Ora ci sono ${masters[`${message.key}`]} master a chiave ${message.key}`);
-    io.emit(`masters_number_${message.key}`, {'masters': masters[`${message.key}`]});
+    console.log(`Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master a chiave ${socket.key}`);
   });
 
-  socket.on('get_masters', function(message) {
-    if (masters[`${message.key}`] == undefined) masters[`${message.key}`] = 0;
-    io.emit(`masters_number_${message.key}`, {'masters': masters[`${message.key}`]});
+  socket.on('get_update', function(message) {
+    io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
   });
 
   socket.on('disconnect', function() {
+    game[`${socket.key}`].players --;
     if (socket.master == true) {
-      masters[`${socket.key}`] --;
+      game[`${socket.key}`].masters --;
+      
       console.log(`Master disconnesso a chiave: ${socket.key}`);
-      console.log(`Ora ci sono ${masters[`${message.key}`]} master a chiave ${message.key}`);
-      io.emit(`masters_number_${socket.key}`, {'masters': masters[`${socket.key}`]});
     }
     else console.log(`Giocatore disconnesso a chiave: ${socket.key}`);
+
+    console.log(`Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master a chiave ${socket.key}`);
+    io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
   });
 });
 
