@@ -18,16 +18,16 @@ app.get('/', (req, res) => {
 io.sockets.on('connection', function(socket) {
   socket.key = socket.handshake.query.chiave;
   socket.master = false;
-  if (game[`${socket.key}`] == undefined) game[`${socket.key}`] = { 'players': 0, 'masters': 0};
+  if (game[`${socket.key}`] == undefined) game[`${socket.key}`] = { 'players': 0, 'masters': 0, 'turn': 'red'};
   game[`${socket.key}`].players ++ ;
   io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
 
-  console.log(`Chiave ${socket.key}, nuovo giocatore connesso`);
-  console.log(`Chiave ${socket.key}, ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
+  console.log(`Chiave ${socket.key} - Giocatore connesso`);
+  console.log(`Chiave ${socket.key} - Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
 
   // Quando il server riceve una comunicazione di tipo "flip_card" dal client
   socket.on('flip_card', function(message) {
-    console.log(`Chiave ${message.key}, carta ${message.id_flip} girata a `);
+    console.log(`Chiave ${message.key} - Carta ${message.id_flip} girata a `);
     io.emit(`flip_card_${message.key}`, message);
   });
 
@@ -36,8 +36,8 @@ io.sockets.on('connection', function(socket) {
     game[`${socket.key}`].masters ++ ;
     io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
 
-    console.log(`Chiave ${socket.key}, un giocatore è diventato master`);
-    console.log(`Chiave ${socket.key}, ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
+    console.log(`Chiave ${socket.key} - Un giocatore è diventato master`);
+    console.log(`Chiave ${socket.key} - Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
   });
 
   socket.on('get_update', function(message) {
@@ -48,10 +48,10 @@ io.sockets.on('connection', function(socket) {
     game[`${socket.key}`].players --;
     if (socket.master == true) {
       game[`${socket.key}`].masters --;
-      console.log(`Chiave ${socket.key}, master disconnesso`);
-    } else console.log(`Chiave ${socket.key}, giocatore disconnesso`);
+      console.log(`Chiave ${socket.key} - Master disconnesso`);
+    } else console.log(`Chiave ${socket.key} - Giocatore disconnesso`);
 
-    console.log(`Chiave ${socket.key}, ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
+    console.log(`Chiave ${socket.key} - Ora ci sono ${game[`${socket.key}`].players - game[`${socket.key}`].masters} player e ${game[`${socket.key}`].masters} master`);
     io.emit(`status_${socket.key}`, {'masters': game[`${socket.key}`].masters, 'players': game[`${socket.key}`].players - game[`${socket.key}`].masters});
   });
 });
