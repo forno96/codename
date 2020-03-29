@@ -27,7 +27,7 @@ io.sockets.on('connection', function(socket) {
 
   // Quando il server riceve una comunicazione di tipo "flip_card" dal client
   socket.on('flip_card', function(message) {
-    console.log(`Chiave ${message.key} - Carta ${message.id_flip} girata a `);
+    console.log(`Chiave ${message.key} - Carta ${message.id_flip} girata`);
     io.emit(`flip_card_${message.key}`, message);
   });
 
