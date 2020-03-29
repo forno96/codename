@@ -169,7 +169,7 @@ function flipCard(id){
           break;
       }
     }
-    else {
+    else { // Caso in cui sei un player
       $(`#${id}`).removeClass("bg-secondary");
 
       switch (color[id]) {
