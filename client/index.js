@@ -116,11 +116,12 @@ function main(st) {
     for (var h = 0; h < 25; h++) showed_cards[h] = false;
 
     socket.emit('be_master', {});
-    $("#center").append(`<h2 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Master View</h2> <h2 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="players">Players in game: 0</h2> <h2 class="text-light mt-3 mb-0 mr-4" style="text-align:right;float:right;" id="masters">Masters in game: 0</h2>`);
+    $("#center").append(`<h2 class="text-light mt-3 mb-0 font-weight-bold" style="text-align:left;float:left;">Master View</h2>`);
   } else {
     socket.emit('get_update', {});
-    $("#center").append(`<h2 class="text-light mt-3 mb-0" style="text-align:left;float:left;">Player View</h2> <h2 class="text-light mt-3 mb-0" style="text-align:right;float:right;" id="players">Players in game: 0</h2> <h2 class="text-light mt-3 mb-0 mr-4" style="text-align:right;float:right;" id="masters">Masters in game: 0</h2>`);
+    $("#center").append(`<h2 class="text-light mt-3 mb-0 font-weight-bold" style="text-align:left;float:left;">Player View</h2>`);
   }
+  $("#center").append(`<h2 class="text-light mt-3 mb-0 ml-4 font-weight-bold" style="text-align:right;float:right;" id="players">Players in game: 0</h2> <h2 class="text-light mt-3 mb-0 font-weight-bold" style="text-align:right;float:right;" id="masters">Masters in game: 0</h2>`);
 }
 
 function _flipCard(id){
