@@ -1,4 +1,4 @@
-const abspath = '/usr/src/app';
+const abspath = __dirname;
 
 var express = require('express');
 var app = express();
