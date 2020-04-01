@@ -1,7 +1,9 @@
-const abspath = '/usr/src/app';
-
 var express = require('express');
 var app = express();
+var path = require('path');
+
+const abspath = path.join(__dirname, '..');
+
 app.use(express.static(abspath + '/client'));
 
 var server = require('http').Server(app);
