@@ -8,3 +8,4 @@ WORKDIR /usr/src/app/server
 RUN npm i
 
 CMD ["node", "ludo.js"]
+EXPOSE 8080
