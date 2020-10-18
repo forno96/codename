@@ -6,3 +6,8 @@
 h1{
   font-family: Robot;
 }
+
+#code {
+  font-family: Robot;
+  position: absolute;
+}

@@ -19,18 +19,41 @@ var key = $.urlParam("chiave");
 if (key == null){
    // Per cancellare i bottoni di base e reimpiazzarli
   $("#start").html(`
-    <h2 class="text-light mt-4">Inserisci la chiave</h2>
-    <div class="row justify-content-center">
-      <form class="form-group">
-        <div class="input-group input-group-lg">
-          <input type="text" name="chiave" class="form-control" placeholder="Chiave">
-          <div class="input-group-append">
-            <button class="btn btn-outline-light" type="submit">Vai</button>
-          </div>
+    <div class="card-deck">
+      <div class="card text-center bg-dark border-light">
+        <div class="card-title">
+          <h2 class="text-light mt-4">Unisciti alla sessione di gioco</h2>
         </div>
-      </form>
+        <div class="card-body">
+          <form class="form-group">
+            <div class="input-group input-group-lg">
+              <input type="text" name="chiave" class="form-control" placeholder="Chiave Sessione">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-light" type="submit">Vai</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card text-center bg-dark border-light">
+        <div class="card-title">
+          <h2 class="text-light mt-4">Crea nuova sessione di gioco</h2>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-outline-light btn-lg" onclick="genKey()">Genera sessione</button>
+        </div>
+      </div>
     </div>
   `);
+}
+else {
+  $("#codice").append("Chiave: " + key)
+}
+
+function genKey(){
+  let r = Math.random().toString(36).substring(3);
+  window.location.href += "?chiave="+r
 }
 
 socket.on(`status_${key}`, function(message){
