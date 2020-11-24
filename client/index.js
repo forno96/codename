@@ -1,4 +1,4 @@
-var socket = io.connect(window.location.href);
+//var socket = io.connect(window.location.href);
 
 var showed_cards;
 var status;
@@ -41,11 +41,23 @@ if (key == null){
           <h2 class="text-light mt-4">Crea nuova sessione di gioco</h2>
         </div>
         <div class="card-body">
+          <div class="mb-2" id="decks"></div>
           <button class="btn btn-outline-light btn-lg" onclick="genKey()">Genera sessione</button>
         </div>
       </div>
     </div>
   `);
+
+  for (var deck in decks) {
+    $("#decks").append(`
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="deck-${deck}">
+        <label class="form-check-label text-light h4 text-capitalize" for="deck-${deck}">
+          ${deck}
+        </label>
+      </div>
+    `);
+  }
 }
 else {
   $("#codice").append("Chiave: " + key)
@@ -53,7 +65,28 @@ else {
 
 function genKey(){
   let r = Math.random().toString(36).substring(3);
-  window.location.href += "?chiave="+r
+  window.location.href += '?chiave=' + genDeckCode() + "-" + r
+}
+
+function genDeckCode(){
+  binary = "";
+  decksOrder.forEach((deck, i) => {
+    binary += $("#deck-"+deck).is(':checked') ? 1 : 0
+  });
+  return parseInt(binary, 2)
+}
+function e(key){
+  var ret = [];
+  splitted = key.split("-");
+  if (splitted.length > 2){
+    code = parseInt(splitted[0]).toString(2);
+    for (var item in code) {
+      if (code[item] == "1") ret.push(decksOrder[item]);
+    }
+  }
+  else ret = decksOrder;
+
+  return ret;
 }
 
 socket.on(`status_${key}`, function(message){
@@ -65,7 +98,16 @@ function main(st) {
   showed_cards = [];
   for (var k = 0; k < 25; k++) {showed_cards[k] = false;}
   status = st; // master | player
-  gen_cards(); // Dato il seed "chiave" tutti sono sincronizzati
+
+  gen_cards({
+    color: {
+      red: 9,
+      blue: 8,
+      black: 1,
+      white: 7
+    },
+    decks: decriptcode(key)
+  }); // Dato il seed "chiave" tutti sono sincronizzati
 
   $("#start").hide(); // Per cancellare i bottoni di base
 
@@ -110,7 +152,7 @@ function main(st) {
       $(".row:last").append(`
         <div class="card bg-secondary text-center col-2 m-1 px-1" id="${i}" style="border-width: 2px;">
           <div class="card-body px-1">
-            <h3 class="card-text font-weight-bold">${cards[i]}</h3>
+            <h3 class="card-text font-weight-bold text-capitalize">${cards[i]}</h3>
           </div>
         </div>
       `);
@@ -123,7 +165,7 @@ function main(st) {
               <p id ="title">Not showed</p>
             </div>
             <div class="card-body px-1">
-              <h3 class="card-text font-weight-bold">${cards[i]}</h3>
+              <h3 class="card-text font-weight-bold text-capitalize">${cards[i]}</h3>
             </div>
           </a>
         </div>
