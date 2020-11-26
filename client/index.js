@@ -1,4 +1,4 @@
-//var socket = io.connect(window.location.href);
+var socket = io.connect(window.location.href);
 
 var showed_cards;
 var status;
@@ -48,7 +48,8 @@ if (key == null){
     </div>
   `);
 
-  for (var deck in decks) {
+  for (var i in decksOrder) {
+    let deck = decksOrder[i];
     $("#decks").append(`
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" id="deck-${deck}">
@@ -73,15 +74,21 @@ function genDeckCode(){
   decksOrder.forEach((deck, i) => {
     binary += $("#deck-"+deck).is(':checked') ? 1 : 0
   });
+  //console.log(binary);
   return parseInt(binary, 2)
 }
-function e(key){
+function decriptcode(key){
   var ret = [];
   splitted = key.split("-");
-  if (splitted.length > 2){
+  if (splitted.length > 1){
     code = parseInt(splitted[0]).toString(2);
-    for (var item in code) {
-      if (code[item] == "1") ret.push(decksOrder[item]);
+    console.log(code);
+
+    for(let a = code.length - 1; a>=0; a--) {
+      console.log(a, decksOrder.length, code.length);
+      let i = a + (decksOrder.length - code.length);
+      console.log(decksOrder[i])
+      if (code[a] == "1") ret.unshift(decksOrder[i]);
     }
   }
   else ret = decksOrder;
@@ -97,7 +104,7 @@ socket.on(`status_${key}`, function(message){
 function main(st) {
   showed_cards = [];
   for (var k = 0; k < 25; k++) {showed_cards[k] = false;}
-  status = st; // master | player
+  status = st; // "master" || "player"
 
   gen_cards({
     color: {
