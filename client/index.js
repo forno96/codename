@@ -82,12 +82,9 @@ function decriptcode(key){
   splitted = key.split("-");
   if (splitted.length > 1){
     code = parseInt(splitted[0]).toString(2);
-    console.log(code);
 
     for(let a = code.length - 1; a>=0; a--) {
-      console.log(a, decksOrder.length, code.length);
       let i = a + (decksOrder.length - code.length);
-      console.log(decksOrder[i])
       if (code[a] == "1") ret.unshift(decksOrder[i]);
     }
   }

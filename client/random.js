@@ -33,12 +33,10 @@ function gen_cards(settings){
   }
 
   settings.decks.forEach((deck, i) => {
-    // aggiungi carte
-    //console.log(deck,i);
-    if (i > 0) cards = cards.concat(decks[deck]);
+    console.log(deck);
+    cards = cards.concat(decks[deck]);
   });
 
-  //cards = decks["italiano"];
   shuffle(cards);
 
   for (var prop in settings.color) {
