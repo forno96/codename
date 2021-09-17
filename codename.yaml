@@ -37,6 +37,10 @@ kind: Ingress
 metadata:
   name: codename-ingress
 spec:
+  tls:
+  - hosts:
+    - codename.forno96.it
+    secretName: default
   rules:
   - host: codename.forno96.it
     http:
