@@ -38,7 +38,7 @@ metadata:
   name: codename-ingress
 spec:
   rules:
-  - host: forno96.it
+  - host: codename.forno96.it
     http:
       paths:
       - path: /
