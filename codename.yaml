@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: codename
-        image: forno96/codenameforno96/codename
+        image: forno96/codename
         ports:
         - containerPort: 8080
 ---
