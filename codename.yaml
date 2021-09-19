@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: codename
-        image: forno96/codename
+        image: localhost:32000/codename
         ports:
         - containerPort: 8080
 ---
