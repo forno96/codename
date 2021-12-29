@@ -61,7 +61,7 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-var port = '8080';
+var port = '80';
 server.listen(port, () => {
   console.log('Server started at port ' + port + '!');
 });
