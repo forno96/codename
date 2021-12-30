@@ -1,0 +1,4 @@
+*.yaml
+copilot
+.git
+Dockerrun.aws.json
