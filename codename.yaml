@@ -17,6 +17,7 @@ spec:
       containers:
       - name: codename
         image: localhost:32000/codename
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 ---
