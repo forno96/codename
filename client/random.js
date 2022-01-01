@@ -8,7 +8,7 @@ var decks = {
 };
 var decksOrder = ["italiano_classic", "español_classic", "english_classic", "italiano_duo", "español_duo", "english_duo"]
 
-var color = [];//["red", "red", "red", "red", "red", "red", "red", "red", "red", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "black", "white", "white", "white", "white", "white", "white", "white"];
+var color = [];
 var cards = [];
 
 function gen_cards(settings){
