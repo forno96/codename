@@ -50,6 +50,7 @@ if (key == null){
 
   for (var i in decksOrder) {
     let deck = decksOrder[i];
+    if (i == decksOrder.length/2) $("#decks").append('<br/>');
     $("#decks").append(`
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" id="deck-${deck}">
